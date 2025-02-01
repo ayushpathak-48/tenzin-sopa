@@ -4,7 +4,7 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <div className="pt-10 px-[120px]">
+    <div className="pt-10 px-4 lg:px-[120px]">
       <Image
         src={"/assets/logo.png"}
         alt="Remax Advantage Plus"
@@ -12,10 +12,12 @@ export const Footer = () => {
         width={148}
         className="h-[52px] w-[148px]"
       />
-      <div className="flex mt-4 border-b border-[#00000029] pb-8">
+      <div className="flex mt-4 border-b border-[#00000029] pb-8 max-lg:flex-col">
         <div className="flex flex-col gap-[54px] min-w-[410px]">
-          <div className="text-[#8F90A6] text-base/5">
-            <span className="font-bold">RE/MAX Advantage Plus - Blaine</span>
+          <div className="text-[#8F90A6] text-base/5 font-lufga">
+            <span className="font-bold font-lufga text-[#000000CC]">
+              RE/MAX Advantage Plus - Blaine
+            </span>
             <br />
             Tenzin Sopa <br />
             Real Estate Sales Professional
@@ -31,15 +33,17 @@ export const Footer = () => {
             <br />
             763-267-5574
           </div>
-          <div>© 2021 . All rights reserved.</div>
+          <div className="text-[#8F90A6] text-[13px]/[16.97px]">
+            © 2021 . All rights reserved.
+          </div>
         </div>
         <div className="flex flex-col gap-11">
-          <div className="text-[#000000CC]">
+          <div className="text-[#000000CC] font-lufga">
             Should you require assistance in navigating our website or searching
             for real estate, please contact our offices at{" "}
-            <span className=" font-bold text-base/6 underline">
+            <Link href={"#"} className=" font-bold text-base/6 underline">
               763-267-5574
-            </span>
+            </Link>
             .
           </div>
           <div className="flex flex-col gap-2">
@@ -50,7 +54,7 @@ export const Footer = () => {
               width={149}
               className="h-[34px] w-[149px] "
             />
-            <div className="text-[#000000]">
+            <div className="text-[#000000] font-lufga">
               The data relating to real estate for sale on this web site comes
               in part from the Broker Reciprocity Program of the Regional
               Multiple Listing Service of Minnesota, Inc. Real estate listings
@@ -65,19 +69,21 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="pt-[19px] pb-10 flex items-center justify-between">
-        <div>© 2024 Inside Real Estate</div>
-        <div className="flex items-center justify-start gap-8">
-          <Link href={"#"} className="text-[#000000CC] text-base/5">
+      <div className="pt-[19px] pb-10 flex items-center justify-between max-lg:flex-col max-lg:gap-6 max-lg:items-start">
+        <div className="text-[#8F90A6] text-base/[20.88px] font-lufga">
+          © 2024 Inside Real Estate
+        </div>
+        <div className="flex items-center justify-start gap-4 lg:gap-8 flex-wrap">
+          <Link href={"#"} className="text-[#000000CC] text-base/5 font-lufga">
             Terms of use
           </Link>
-          <Link href={"#"} className="text-[#000000CC] text-base/5">
+          <Link href={"#"} className="text-[#000000CC] text-base/5 font-lufga">
             Privacy Policy
           </Link>
-          <Link href={"#"} className="text-[#000000CC] text-base/5">
+          <Link href={"#"} className="text-[#000000CC] text-base/5 font-lufga">
             Accessibility
           </Link>
-          <Link href={"#"} className="text-[#000000CC] text-base/5">
+          <Link href={"#"} className="text-[#000000CC] text-base/5 font-lufga">
             Fair Housing Statemet
           </Link>
         </div>

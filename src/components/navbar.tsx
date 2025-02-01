@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const Navbar = () => {
   return (
-    <div className="py-5 px-[120px] flex items-center justify-between shadow-[0px_0px_8px_0px_#00000029] border-[1px] border-[#0000000A] sticky top-0 bg-white z-[999]">
+    <div className="lg:py-5 py-5 px-4 lg:px-[120px] flex items-center justify-between shadow-[0px_0px_8px_0px_#00000029] border-[1px] border-[#0000000A] sticky top-0 bg-white z-[999]">
       <Link href={"/"}>
         <Image
           src={"/assets/logo.png"}
