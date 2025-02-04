@@ -177,7 +177,7 @@ export default function Home() {
             Newly Added Properties around You!
           </div>
         </div>
-        <div className="flex items-center gap-8 max-lg:flex-col overflow-x-auto">
+        <div className="flex items-center gap-8 max-lg:flex-col overflow-x-auto scrollbar-hidden">
           {properties.map((property) => (
             <PropertyCard key={property.id} property={property} />
           ))}

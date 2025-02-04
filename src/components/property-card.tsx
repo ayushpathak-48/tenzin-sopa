@@ -16,7 +16,7 @@ interface PropertyCardProps {
 }
 export const PropertyCard = ({ property }: PropertyCardProps) => {
   return (
-    <div className="border-[1.5px] border-[#EBF7FF] bg-white rounded-[8px] w-[352px]">
+    <div className="border-[1.5px] border-[#EBF7FF] bg-white rounded-[8px] min-w-[352px] w-[352px] ">
       <Image src={property.img} alt="" height={200} width={352} />
       <div className="py-8 px-6 flex flex-col gap-4">
         <div className="flex flex-col gap-2">
