@@ -24,24 +24,28 @@ export const Footer = () => {
             <br />
             License# 40629957
             <br />
-            Cell: 763-267-5574 Direct: 763-267-5574
+            Cell: <Link href={"tel:7632675574"}>763-267-5574</Link> Direct:{" "}
+            <Link href={"tel:7632675574"}>763-267-5574</Link>
             <br />
             <br />
             11806 Aberdeen St NE Suite #100
             <br />
             Blaine, MN 55449
             <br />
-            763-267-5574
+            <Link href={"tel:7632675574"}>763-267-5574</Link>
           </div>
-          <div className="text-[#8F90A6] text-[13px]/[16.97px]">
+          {/* <div className="text-[#8F90A6] text-[13px]/[16.97px]">
             © 2021 . All rights reserved.
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col gap-11">
           <div className="text-[#000000CC] font-lufga">
             Should you require assistance in navigating our website or searching
             for real estate, please contact our offices at{" "}
-            <Link href={"#"} className=" font-bold text-base/6 underline">
+            <Link
+              href={"tel:7632675574"}
+              className=" font-bold text-base/6 underline"
+            >
               763-267-5574
             </Link>
             .
@@ -79,12 +83,6 @@ export const Footer = () => {
           </Link>
           <Link href={"#"} className="text-[#000000CC] text-base/5 font-lufga">
             Privacy Policy
-          </Link>
-          <Link href={"#"} className="text-[#000000CC] text-base/5 font-lufga">
-            Accessibility
-          </Link>
-          <Link href={"#"} className="text-[#000000CC] text-base/5 font-lufga">
-            Fair Housing Statemet
           </Link>
         </div>
       </div>

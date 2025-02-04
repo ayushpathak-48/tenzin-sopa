@@ -23,7 +23,7 @@ export default function Home() {
             width={1000}
             className="absolute right-0 bottom-0"
           />
-          <div className="flex flex-col gap-4 w-[515px] max-w-full">
+          <div className="flex flex-col gap-4 w-[515px] max-w-full ">
             <div className="flex flex-col">
               <div className="text-[#001829] text-xl font-semibold font-lufga">
                 Tenzin Sopa
@@ -37,12 +37,12 @@ export default function Home() {
               purchase needs{" "}
             </div>
           </div>
-          <div>
+          <div className="relative z-[3]">
             <div className="flex items-center justify-start">
               <div
                 onClick={() => setBuyOrSell("buy")}
                 className={cn(
-                  " uppercase tracking-[20%] pt-1 px-4 text-sm/8 rounded-t-[16px] cursor-pointer font-lufga",
+                  " uppercase tracking-[20%] pt-1 px-4 text-sm/8 rounded-t-[16px] cursor-pointer font-lufga active:scale-[0.95] transition-all",
                   buyOrSell == "buy" ? "bg-[#FFFFFFB8]" : "text-[#00000099]"
                 )}
               >
@@ -51,7 +51,7 @@ export default function Home() {
               <div
                 onClick={() => setBuyOrSell("sell")}
                 className={cn(
-                  " uppercase tracking-[20%] pt-1 px-4 text-sm/8 rounded-t-[16px] cursor-pointer font-lufga",
+                  " uppercase tracking-[20%] pt-1 px-4 text-sm/8 rounded-t-[16px] cursor-pointer font-lufga active:scale-[0.95] transition-all",
                   buyOrSell == "sell" ? "bg-[#FFFFFFB8]" : "text-[#00000099]"
                 )}
               >
@@ -87,7 +87,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <div className="p-4 bg-[#0000000A] shadow-[0px_0px_4px_0px_#00000029] flex items-start gap-6 rounded-[16px] border-2 border-[#7BCAFE1F]">
+            <div className="p-4 bg-[#0000000A] shadow-[0px_0px_4px_0px_#00000029] flex items-start gap-6 rounded-[16px] border-2 border-[#7BCAFE1F] hover:scale-[1.05] transition-all">
               <Image
                 src={"/assets/home-tick.svg"}
                 alt=""
@@ -106,7 +106,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="p-4 bg-[#0000000A] shadow-[0px_0px_4px_0px_#00000029] flex items-start gap-6 rounded-[16px] border-2 border-[#7BCAFE1F]">
+            <div className="p-4 bg-[#0000000A] shadow-[0px_0px_4px_0px_#00000029] flex items-start gap-6 rounded-[16px] border-2 border-[#7BCAFE1F] hover:scale-[1.05] transition-all">
               <Image
                 src={"/assets/homeownership.svg"}
                 alt=""
@@ -125,7 +125,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="p-4 bg-[#0000000A] shadow-[0px_0px_4px_0px_#00000029] flex items-start gap-6 rounded-[16px] border-2 border-[#7BCAFE1F]">
+            <div className="p-4 bg-[#0000000A] shadow-[0px_0px_4px_0px_#00000029] flex items-start gap-6 rounded-[16px] border-2 border-[#7BCAFE1F] hover:scale-[1.05] transition-all">
               <Image
                 src={"/assets/trusted-expertise.svg"}
                 alt=""
@@ -144,7 +144,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="p-4 bg-[#0000000A] shadow-[0px_0px_4px_0px_#00000029] flex items-start gap-6 rounded-[16px] border-2 border-[#7BCAFE1F]">
+            <div className="p-4 bg-[#0000000A] shadow-[0px_0px_4px_0px_#00000029] flex items-start gap-6 rounded-[16px] border-2 border-[#7BCAFE1F] hover:scale-[1.05] transition-all">
               <Image
                 src={"/assets/tailored-for-you.svg"}
                 alt=""
@@ -177,7 +177,7 @@ export default function Home() {
             Newly Added Properties around You!
           </div>
         </div>
-        <div className="flex items-center gap-8 max-lg:flex-col">
+        <div className="flex items-center gap-8 max-lg:flex-col overflow-x-auto">
           {properties.map((property) => (
             <PropertyCard key={property.id} property={property} />
           ))}
