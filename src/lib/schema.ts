@@ -7,6 +7,7 @@ export const GetInTouchFormSchema = z.object({
     .string()
     .trim()
     .min(1, { message: "Desired Area is Required" }),
+  message: z.string().trim().min(1, { message: "Message is Required" }),
 });
 
 export type GetInTouchFormSchemaType = z.infer<typeof GetInTouchFormSchema>;

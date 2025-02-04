@@ -15,8 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { GetInTouchFormSchema } from "@/lib/schema";
+import { GetInTouchFormSchema, GetInTouchFormSchemaType } from "@/lib/schema";
 import { Loader } from "lucide-react";
+import { ContactEmailTemplate } from "./contact-email-template";
+import { Textarea } from "./ui/textarea";
 
 export const ContactForm = () => {
   // const addWorkspace = useWorkspaceStore((state) => state.addWorkspace);
@@ -28,25 +30,46 @@ export const ContactForm = () => {
       name: "",
       email: "",
       desired_area: "",
+      message: "",
     },
   });
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (values: GetInTouchFormSchemaType) => {
     setIsLoading(true);
-    // const loadingToast = toast.loading("Inviting...");
+    const loadingToast = toast.loading("Inviting...");
 
     try {
-      // const response = await inviteMember(values);
-      // toast.dismiss(loadingToast);
-      // if (response.success) {
-      //   toast.success("Workspace created successfully");
-      //   router.push(`/workspaces/${response.data?.$id}`);
-      // } else {
-      //   toast.error("Failed to create workspace");
-      // }
+      const formData = new FormData();
+      formData.append("email", process.env.NEXT_PUBLIC_CLIENT_EMAIL || "");
+      formData.append("subject", "New query from Tiger Transport");
+
+      // Generate the HTML email template
+      const htmlTemplate = ContactEmailTemplate({ values });
+      formData.append("html", htmlTemplate);
+
+      // Log the request details
+      console.log("Sending request to:", process.env.NEXT_PUBLIC_API_URL);
+
+      // Send API request
+      const response = await fetch(process.env.NEXT_PUBLIC_API_URL || "", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      console.log("API Response:", result);
+
+      // Handle response
+      toast.dismiss(loadingToast);
+      if (response.ok) {
+        toast.success("Message sent successfully!");
+        form.reset();
+      } else {
+        throw new Error(result.error || "Failed to send the message.");
+      }
     } catch (error) {
       console.log(error);
-      // toast.dismiss(loadingToast);
+      toast.dismiss(loadingToast);
       toast.error("Failed to invite member");
     }
     setIsLoading(false);
@@ -128,7 +151,7 @@ export const ContactForm = () => {
           )}
         />
         <FormField
-          name="email"
+          name="message"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -139,9 +162,10 @@ export const ContactForm = () => {
                 Your message
               </FormLabel>
               <FormControl>
-                <Input
+                <Textarea
+                  rows={3}
                   {...field}
-                  id="email"
+                  id="message"
                   placeholder="olivia@untitledui.com"
                   className="bg-[#FFFFFF] border border-[#00000038] rounded-[8px]"
                 />
