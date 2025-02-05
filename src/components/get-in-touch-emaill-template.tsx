@@ -3,14 +3,14 @@ interface EmailTemplateProps {
     name?: string;
     desired_area?: string;
     email?: string;
-    message?: string;
+    type?: "buy" | "sell";
   };
 }
 
-export const ContactEmailTemplate = ({
+export const GetInTouchEmailTemplate = ({
   values,
 }: EmailTemplateProps): string => {
-  const { name = "", desired_area = "", email = "", message = "" } = values;
+  const { name = "", desired_area = "", email = "", type } = values;
 
   return `
       <!DOCTYPE html>
@@ -83,8 +83,8 @@ export const ContactEmailTemplate = ({
               <h1>You have a new query:</h1>
               ${name ? `<h2>Name: ${name}</h2>` : ""}
               ${desired_area ? `<h2>Pickup Location: ${desired_area}</h2>` : ""}
+              ${type ? `<h2>Type: ${type}</h2>` : ""}
               ${email ? `<h2>Email: ${email}</h2>` : ""}
-              ${message ? `<h2>Message: ${message}</h2>` : ""}
               <div class="email-footer">Tenzin Sopa Real Estate</div>
             </div>
           </div>

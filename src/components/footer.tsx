@@ -13,7 +13,7 @@ export const Footer = () => {
         className="h-[52px] w-[148px]"
       />
       <div className="flex mt-4 border-b border-[#00000029] pb-8 max-lg:flex-col">
-        <div className="flex flex-col gap-[54px] min-w-[410px]">
+        <div className="flex flex-col gap-[54px] w-full lg:min-w-[410px]">
           <div className="text-[#8F90A6] text-base/5 font-lufga">
             <span className="font-bold font-lufga text-[#000000CC]">
               RE/MAX Advantage Plus - Blaine

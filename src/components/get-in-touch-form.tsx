@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -15,13 +14,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { GetInTouchFormSchema } from "@/lib/schema";
+import { GetInTouchFormSchema, GetInTouchFormSchemaType } from "@/lib/schema";
 import { Loader } from "lucide-react";
+import { GetInTouchEmailTemplate } from "./get-in-touch-emaill-template";
 
-export const GetInTouchForm = () => {
-  // const addWorkspace = useWorkspaceStore((state) => state.addWorkspace);
+export const GetInTouchForm = ({ type }: { type: "buy" | "sell" }) => {
   const [isLoading, setIsLoading] = useState(false);
-  // const router = useRouter();
   const form = useForm({
     resolver: zodResolver(GetInTouchFormSchema),
     defaultValues: {
@@ -31,23 +29,40 @@ export const GetInTouchForm = () => {
     },
   });
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (values: GetInTouchFormSchemaType) => {
     setIsLoading(true);
-    // const loadingToast = toast.loading("Inviting...");
+    const loadingToast = toast.loading("Sending Message...");
 
     try {
-      // const response = await inviteMember(values);
-      // toast.dismiss(loadingToast);
-      // if (response.success) {
-      //   toast.success("Workspace created successfully");
-      //   if (response.data) {
-      //     addWorkspace(response.data);
-      //   }
-      //   onCancel?.();
-      //   router.push(`/workspaces/${response.data?.$id}`);
-      // } else {
-      //   toast.error("Failed to create workspace");
-      // }
+      const formData = new FormData();
+      formData.append("email", process.env.NEXT_PUBLIC_CLIENT_EMAIL || "");
+      formData.append("subject", "New query from Tenzin Sopa Real Estate");
+
+      const payLoadData = {
+        ...values,
+        type,
+      };
+      // Generate the HTML email template
+      const htmlTemplate = GetInTouchEmailTemplate({ values: payLoadData });
+      formData.append("html", htmlTemplate);
+
+      // Send API request
+      const response = await fetch(process.env.NEXT_PUBLIC_API_URL || "", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      console.log("API Response:", result);
+
+      // Handle response
+      toast.dismiss(loadingToast);
+      if (response.ok) {
+        toast.success("Message sent successfully!");
+        form.reset();
+      } else {
+        throw new Error(result.error || "Failed to send the message.");
+      }
     } catch (error) {
       console.log(error);
       // toast.dismiss(loadingToast);
@@ -100,9 +115,29 @@ export const GetInTouchForm = () => {
         />
         <Button className="w-max">
           {isLoading ? (
-            <Loader className="animate-spin size-4" />
+            <span>
+              <Loader className="animate-spin size-4" />
+              Please wait...
+            </span>
           ) : (
-            "Get in Touch"
+            <>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 14L11.6667 11.6667M13.3333 7.66667C13.3333 10.7963 10.7963 13.3333 7.66667 13.3333C4.53705 13.3333 2 10.7963 2 7.66667C2 4.53705 4.53705 2 7.66667 2C10.7963 2 13.3333 4.53705 13.3333 7.66667Z"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              Get in Touch
+            </>
           )}
         </Button>
       </form>

@@ -15,40 +15,56 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { GetInTouchFormSchema, GetInTouchFormSchemaType } from "@/lib/schema";
+import {
+  ContactFormSchema,
+  // ContactFormSchemaType,
+  HomePageContactFormSchema,
+  // HomePageContactFormSchemaType,
+} from "@/lib/schema";
 import { Loader } from "lucide-react";
 import { ContactEmailTemplate } from "./contact-email-template";
 import { Textarea } from "./ui/textarea";
+import { z } from "zod";
 
-export const ContactForm = () => {
-  // const addWorkspace = useWorkspaceStore((state) => state.addWorkspace);
+export const ContactForm = ({
+  page = "contact",
+}: {
+  page?: "contact" | "home";
+}) => {
   const [isLoading, setIsLoading] = useState(false);
-  // const router = useRouter();
+
+  const formSchema =
+    page == "contact" ? ContactFormSchema : HomePageContactFormSchema;
+  const defaultValues =
+    page == "contact"
+      ? {
+          name: "",
+          email: "",
+          desired_area: "",
+          message: "",
+        }
+      : {
+          name: "",
+          email: "",
+        };
+
   const form = useForm({
-    resolver: zodResolver(GetInTouchFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      desired_area: "",
-      message: "",
-    },
+    resolver: zodResolver(formSchema),
+    defaultValues: defaultValues,
   });
 
-  const handleSubmit = async (values: GetInTouchFormSchemaType) => {
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     const loadingToast = toast.loading("Inviting...");
 
     try {
       const formData = new FormData();
       formData.append("email", process.env.NEXT_PUBLIC_CLIENT_EMAIL || "");
-      formData.append("subject", "New query from Tiger Transport");
+      formData.append("subject", "New query from Tenzin Sopa Real Estate");
 
       // Generate the HTML email template
       const htmlTemplate = ContactEmailTemplate({ values });
       formData.append("html", htmlTemplate);
-
-      // Log the request details
-      console.log("Sending request to:", process.env.NEXT_PUBLIC_API_URL);
 
       // Send API request
       const response = await fetch(process.env.NEXT_PUBLIC_API_URL || "", {
@@ -57,7 +73,6 @@ export const ContactForm = () => {
       });
 
       const result = await response.json();
-      console.log("API Response:", result);
 
       // Handle response
       toast.dismiss(loadingToast);
@@ -79,7 +94,7 @@ export const ContactForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="flex flex-col gap-3 w-[426px]"
+        className="flex flex-col gap-3 lg:w-[426px]"
       >
         <FormField
           name="name"
@@ -127,53 +142,58 @@ export const ContactForm = () => {
             </FormItem>
           )}
         />
-        <FormField
-          name="desired_area"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel
-                className="text-[#000000AB] font-medium text-sm/5"
-                htmlFor="location"
-              >
-                Your location
-              </FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  id="location"
-                  placeholder="Your desired area"
-                  className="bg-[#FFFFFF] border border-[#00000038] rounded-[8px]"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="message"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel
-                className="text-[#000000AB] font-medium text-sm/5"
-                htmlFor="message"
-              >
-                Your message
-              </FormLabel>
-              <FormControl>
-                <Textarea
-                  rows={3}
-                  {...field}
-                  id="message"
-                  placeholder="olivia@untitledui.com"
-                  className="bg-[#FFFFFF] border border-[#00000038] rounded-[8px]"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {page == "contact" ? (
+          <>
+            {" "}
+            <FormField
+              name="desired_area"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel
+                    className="text-[#000000AB] font-medium text-sm/5"
+                    htmlFor="location"
+                  >
+                    Your location
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      id="location"
+                      placeholder="Your desired area"
+                      className="bg-[#FFFFFF] border border-[#00000038] rounded-[8px]"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="message"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel
+                    className="text-[#000000AB] font-medium text-sm/5"
+                    htmlFor="message"
+                  >
+                    Your message
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      rows={3}
+                      {...field}
+                      id="message"
+                      placeholder="olivia@untitledui.com"
+                      className="bg-[#FFFFFF] border border-[#00000038] rounded-[8px]"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </>
+        ) : null}
         <Button className="w-max mt-[35px]">
           {isLoading ? (
             <Loader className="animate-spin size-4" />
